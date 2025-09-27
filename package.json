@@ -1,6 +1,6 @@
 {
     "name": "raphael-custom-next",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "Opinionated Next.js starter CLI (Tailwind, shadcn, Prisma, Redux, React Query, i18n, etc.)",
     "bin": {
         "create-my-next": "index.js"
