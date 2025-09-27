@@ -49,6 +49,7 @@ async function main() {
                     { title: "TanStack React Query", value: "react-query" },
                     { title: "Framer Motion", value: "framer" },
                     { title: "i18next", value: "i18n" },
+                    { title: "jose", value: "jose" },
                 ],
                 hint: "You can pick multiple",
             },
@@ -82,18 +83,33 @@ async function main() {
 
     // 1) Bootstrap Next.js (App Router, TS, ESLint)
     console.log("\n⚡ Bootstrapping Next.js (TypeScript + ESLint)...\n");
-    await execa(
-        "npx",
-        [
-            "create-next-app@latest",
-            projectPath,
-            "--typescript",
-            "--eslint",
-            "--import-alias",
-            "@/*",
-        ],
-        { stdio: "inherit" }
-    );
+    if (packageManager === "npm") {
+        await execa(
+            "npx",
+            [
+                "create-next-app@latest",
+                projectPath,
+                "--typescript",
+                "--eslint",
+                "--import-alias",
+                "@/*",
+            ],
+            { stdio: "inherit" }
+        );
+    } else if (packageManager === "pnpm") {
+        await execa(
+            "pnpm create",
+            [
+                "next-app@latest",
+                projectPath,
+                "--typescript",
+                "--eslint",
+                "--import-alias",
+                "@/*",
+            ],
+            { stdio: "inherit" }
+        );
+    }
 
     // If created in a separate folder, create-next-app already created the folder. If we passed projectPath as folder, change cwd accordingly
     const cwd = projectPath;
@@ -149,6 +165,10 @@ async function main() {
 
     if (features.includes("framer")) {
         installDeps.push("framer-motion@latest");
+    }
+
+    if (features.includes("jose")) {
+        installDeps.push("jose@latest");
     }
 
     if (features.includes("i18n")) {
